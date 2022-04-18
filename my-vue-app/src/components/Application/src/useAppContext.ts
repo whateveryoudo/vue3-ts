@@ -7,7 +7,7 @@
  * @FilePath: \my-vue-app\src\components\Application\src\useAppContext.ts
  */
 import { InjectionKey, Ref } from 'vue'
-import { createContext } from '/@/hooks/core/useContext'
+import { createContext } from '@/hooks/core/useContext'
 export interface AppProviderContextProps{
     prefixCls: Ref<string>;
 }

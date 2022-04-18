@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent, toRefs } from "vue";
 import { createAppProviderContext } from "./useAppContext";
-import { prefixCls } from "/@/settings/designSettings";
+import { prefixCls } from "@/settings/designSettings";
 export default defineComponent({
   props: {
     prefixCls,

@@ -7,8 +7,8 @@
  * @FilePath: \my-vue-app\src\router\routes.ts
  */
 import type { AppRouteRecordRaw } from "./types";
-import { PageEnums } from "/@/enums/pageEnums";
-const Login = import("/@/views/login/index.vue");
+import { PageEnums } from "@/enums/pageEnums";
+const Login = import("@/views/login/index.vue");
 // const Home = import("@/views/home/index.vue");
 
 export const RootRoute: AppRouteRecordRaw = {
