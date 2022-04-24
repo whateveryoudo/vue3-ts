@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2021-05-11 15:08:07
- * @LastEditTime: 2022-04-18 15:28:50
+ * @LastEditTime: 2022-04-24 10:00:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\App.vue
@@ -24,7 +24,6 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>
