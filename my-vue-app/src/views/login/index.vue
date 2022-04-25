@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2021-05-11 17:13:32
- * @LastEditTime: 2022-04-24 15:26:25
+ * @LastEditTime: 2022-04-25 17:05:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\views\login\index.vue
@@ -16,18 +16,6 @@
         </h1>
       </header>
       <a-form :model="formState" v-bind="formItemLayout" @finish="onFinish">
-        <a-form-item
-          label="用户名"
-          name="username"
-          :rules="[{ required: true, message: '请输入用户名' }]"
-        >
-          <a-input
-            placeholder="请输入用户名"
-            v-model:value="formState.username"
-          >
-            <template #prefix><UserOutlined type="user" /></template>
-          </a-input>
-        </a-form-item>
         <a-form-item
           label="用户名"
           name="username"
@@ -82,6 +70,7 @@
 import { defineComponent, ref, reactive } from "vue";
 import { message } from "ant-design-vue";
 import { getImageCaptcha } from "@/api/login";
+import { } from ''
 import {
   UserOutlined,
   LockOutlined,
@@ -95,7 +84,6 @@ interface FormState {
 export default defineComponent({
   components: { UserOutlined, LockOutlined, SafetyOutlined },
   setup() {
-    const test = ref('啊实打实大所多')
     const verifySrc = ref("");
     const loading = ref(false);
     const formState = reactive<FormState>({

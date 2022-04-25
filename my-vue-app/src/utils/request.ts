@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-20 11:45:05
- * @LastEditTime: 2022-04-24 09:47:40
+ * @LastEditTime: 2022-04-25 17:41:08
  * @LastEditors: your name
  * @Description: 请求方法
  * @FilePath: \my-vue-app\src\utils\request.ts
@@ -36,7 +36,6 @@ service.interceptors.response.use(
     }
   }
 )
-const test = () => {}
 export const request = async <T = any>(
   config: AxiosRequestConfig,
   options: RequestOption = {}
