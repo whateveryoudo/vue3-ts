@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-20 11:40:50
- * @LastEditTime: 2022-04-22 14:44:59
+ * @LastEditTime: 2022-04-27 09:58:20
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\api\login\index.ts
@@ -14,14 +14,15 @@ export function login(data: API.LoginParams) {
       url: "login",
       method: "post",
       data,
-    }
+    },
+    { isGetDataDirectly: false }
   );
 }
 
-export function getImageCaptcha(params?:API.CaptchaParams) {
+export function getImageCaptcha(params?: API.CaptchaParams) {
   return request<API.CaptchaResult>({
-    url: 'captcha/img',
-    method: 'get',
-    params
-  })
+    url: "captcha/img",
+    method: "get",
+    params,
+  });
 }

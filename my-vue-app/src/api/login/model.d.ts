@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-21 20:02:29
- * @LastEditTime: 2022-04-22 10:38:02
+ * @LastEditTime: 2022-04-26 09:30:44
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\api\login\model.d.ts
@@ -20,6 +20,7 @@ declare namespace API {
     height?: number;
   }
   type CaptchaResult = {
-    img: string
+    img: string;
+    id: string;
   }
 }

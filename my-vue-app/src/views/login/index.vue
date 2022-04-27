@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2021-05-11 17:13:32
- * @LastEditTime: 2022-04-25 17:05:18
+ * @LastEditTime: 2022-04-27 10:00:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\views\login\index.vue
@@ -40,7 +40,7 @@
         <a-form-item
           name="verifyCode"
           label="图形验证码"
-          :rules="[{ required: true, message: '请输入' }]"
+          :rules="[{ required: true, message: '请输入验证码' }]"
         >
           <a-input
             placeholder="请输入验证码"
@@ -50,6 +50,7 @@
             <template #suffix>
               <img
                 :src="verifySrc"
+                @click="setVerify"
                 alt=""
                 class="absolute right-0 h-full cursor-pointer"
               />
@@ -68,43 +69,58 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
-import { message } from "ant-design-vue";
+import { message, Modal } from "ant-design-vue";
 import { getImageCaptcha } from "@/api/login";
-import { } from ''
+import { useUserStore } from '@/store/modules/user'
 import {
   UserOutlined,
   LockOutlined,
   SafetyOutlined,
 } from "@ant-design/icons-vue";
 interface FormState {
-  username: String;
-  password: String;
-  verifyCode: String;
+  username: string;
+  password: string;
+  verifyCode: string;
+  captchaId: string;
 }
 export default defineComponent({
   components: { UserOutlined, LockOutlined, SafetyOutlined },
   setup() {
     const verifySrc = ref("");
     const loading = ref(false);
+    const userStore = useUserStore();
     const formState = reactive<FormState>({
       username: "",
       password: "",
       verifyCode: "",
+      captchaId: ''
     });
     const setVerify = async () => {
-      const { img } = await getImageCaptcha({ width: 100, height: 50 });
+      const { img, id } = await getImageCaptcha({ width: 100, height: 50 });
       verifySrc.value = img;
+      formState.captchaId = id;
     };
     // 初始获取验证码
     setVerify();
-    const onFinish = async (values) => {
-      console.log(values);
+    const onFinish = async () => {
       loading.value = true;
       message.loading("登录中...");
       try {
-      } catch (e) {}
+        await userStore.login(formState).finally(() => {
+          loading.value = false;
+          message.destroy();
+        });
+        message.success('登录成功')
+      } catch (e:any) {
+        Modal.error({
+          title: '系统提示',
+          content: e.message
+        });
+        setVerify();
+      }
     };
     return {
+      setVerify,
       verifySrc,
       formState,
       loading,
