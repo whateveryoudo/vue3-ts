@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-25 17:05:38
- * @LastEditTime: 2022-04-27 10:30:38
+ * @LastEditTime: 2022-04-28 17:29:01
  * @LastEditors: your name
  * @Description: 登录模块
  * @FilePath: \my-vue-app\src\store\modules\user.ts
@@ -11,6 +11,7 @@ import Storage from "@/utils/Storage";
 import { ACCESS_TOKEN_KEY } from "@/enums/cacheEnum";
 import { login } from "@/api/login";
 import { getUserInfo, getMenus } from "@/api/account";
+import { generatorDynamicRouter } from '@/router/generator-router'
 interface UserState {
   token: string;
   name: string;
@@ -35,6 +36,9 @@ export const useUserStore = defineStore({
       const [userInfo, {perms, menus}] = await Promise.all([getUserInfo(), getMenus()]);
       console.log(userInfo);
       this.userInfo = userInfo;
+      // 路由生成
+      const generatorResult = generatorDynamicRouter(menus);
+      console.log(generatorResult);
     },
   },
 });
