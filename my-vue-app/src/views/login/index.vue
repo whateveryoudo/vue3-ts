@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2021-05-11 17:13:32
- * @LastEditTime: 2022-04-27 10:00:02
+ * @LastEditTime: 2022-05-26 14:57:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\views\login\index.vue
@@ -22,8 +22,8 @@
           :rules="[{ required: true, message: '请输入用户名' }]"
         >
           <a-input
-            placeholder="请输入用户名"
             v-model:value="formState.username"
+            placeholder="rootadmin"
           >
             <template #prefix><UserOutlined type="user" /></template>
           </a-input>
@@ -33,7 +33,7 @@
           name="password"
           :rules="[{ required: true, message: '请输入密码' }]"
         >
-          <a-input placeholder="请输入密码" v-model:value="formState.password">
+          <a-input type="password" placeholder="123456" v-model:value="formState.password">
             <template #prefix><LockOutlined type="user" /></template>
           </a-input>
         </a-form-item>
@@ -71,6 +71,7 @@
 import { defineComponent, ref, reactive } from "vue";
 import { message, Modal } from "ant-design-vue";
 import { getImageCaptcha } from "@/api/login";
+import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
 import {
   UserOutlined,
@@ -88,6 +89,8 @@ export default defineComponent({
   setup() {
     const verifySrc = ref("");
     const loading = ref(false);
+    const route = useRoute();
+  const router = useRouter();
     const userStore = useUserStore();
     const formState = reactive<FormState>({
       username: "",
@@ -111,6 +114,7 @@ export default defineComponent({
           message.destroy();
         });
         message.success('登录成功')
+        setTimeout (() => {router.replace((route.query.redirect as string) ?? '/')})
       } catch (e:any) {
         Modal.error({
           title: '系统提示',

@@ -1,15 +1,22 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-28 17:27:43
- * @LastEditTime: 2022-04-29 18:06:39
+ * @LastEditTime: 2022-05-26 14:31:16
  * @LastEditors: your name
  * @Description: 路由数据处理
  * @FilePath: \my-vue-app\src\router\generator-router.tsx
  */
 import { type RouteRecordRaw } from "vue-router";
 import { isUrl } from "@/utils";
-import RouterView from "@/layout/routerView.vue";
+import RouterView from "@/layout/routerView/index.vue";
 import { constRouterComponent } from "./asyncModules";
+import router, { routes } from "./index";
+import { notFound } from './staticModules/error'
+import common from "./staticModules";
+import outsideLayout from "./outsideLayout";
+
+
+const endRoutes: RouteRecordRaw[] = [notFound]
 export function filterAsyncRoute(
   routes: API.Menu[],
   parentRoute: API.Menu | null = null,
@@ -18,7 +25,7 @@ export function filterAsyncRoute(
   return routes
     .filter(
       (item) =>
-        item.type !== 2 && item.isShow && item.parentId === parentRoute?.id
+        item.type !== 2 && item.isShow && item.parentId == parentRoute?.id
     )
     .map((item) => {
       const { router, type, viewPath, keepalive, name, icon } = item;
@@ -71,15 +78,69 @@ export function filterAsyncRoute(
         const perms = routes
           .filter((n) => n.parentId === item.id)
           .flatMap((n) => n.perms?.split(","));
+        //perms类型如何确定？？
+        if (route.meta && perms.length) {
+          route.meta.perms = perms;
+        }
+        return route;
       }
       return undefined;
     })
     .filter((item): item is RouteRecordRaw => !!item);
 }
-
+const generatorNamePath = (
+  routes: RouteRecordRaw[],
+  namePath?: string[],
+  parent?: RouteRecordRaw
+) => {
+  routes.forEach((item) => {
+    if (item.children?.length) {
+      if (item.meta && typeof item.name === "string") {
+        item.meta.namePath = Array.isArray(namePath)
+          ? namePath.concat(item.name)
+          : [item.name];
+        item.meta.fullPath = parent?.meta?.fullPath
+          ? [parent.meta.fullPath, item.name].join("/")
+          : item.name;
+        generatorNamePath(item.children, namePath, item);
+      }
+    } else {
+      if (item.meta && typeof item.name === "string") {
+        item.meta.namePath = Array.isArray(namePath)
+          ? namePath.concat(item.name)
+          : [item.name];
+        item.meta.fullPath = parent?.meta?.fullPath
+          ? [parent.meta.fullPath, item.name].join("/")
+          : item.name;
+      }
+    }
+  });
+};
 export function generatorDynamicRouter(asyncMenus: API.Menu[]) {
   try {
     const routerList = filterAsyncRoute(asyncMenus);
+    const layout = routes.find((item) => item.name === "Layout")!; // 添加非空断言
+    generatorNamePath(common);
+    const menus = [...routerList, ...common, ...endRoutes];
+    layout.children = menus;
+    const removeRoute = router.addRoute(layout);
+    const filterRoutes = router
+      .getRoutes()
+      .filter(
+        (item) =>
+          (!item.children.length ||
+            Object.is(item.meta?.hideChildrenInMenu, true)) &&
+          !outsideLayout.some((n) => n.name === item.name)
+      );
+    removeRoute();
+    console.log(filterRoutes);
+    layout.children = [...filterRoutes];
+    router.addRoute(layout);
+    console.log('所有路由', router.getRoutes());
+    return {
+      menus,
+      routes: layout.children,
+    }
   } catch (error) {
     console.log("路由处理出错", error);
     return {
