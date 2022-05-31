@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-28 17:27:43
- * @LastEditTime: 2022-05-26 14:31:16
+ * @LastEditTime: 2022-05-30 16:50:55
  * @LastEditors: your name
  * @Description: 路由数据处理
  * @FilePath: \my-vue-app\src\router\generator-router.tsx
@@ -11,12 +11,11 @@ import { isUrl } from "@/utils";
 import RouterView from "@/layout/routerView/index.vue";
 import { constRouterComponent } from "./asyncModules";
 import router, { routes } from "./index";
-import { notFound } from './staticModules/error'
+import { notFound } from "./staticModules/error";
 import common from "./staticModules";
 import outsideLayout from "./outsideLayout";
 
-
-const endRoutes: RouteRecordRaw[] = [notFound]
+const endRoutes: RouteRecordRaw[] = [notFound];
 export function filterAsyncRoute(
   routes: API.Menu[],
   parentRoute: API.Menu | null = null,
@@ -121,7 +120,7 @@ export function generatorDynamicRouter(asyncMenus: API.Menu[]) {
     const routerList = filterAsyncRoute(asyncMenus);
     const layout = routes.find((item) => item.name === "Layout")!; // 添加非空断言
     generatorNamePath(common);
-    const menus = [...routerList, ...common, ...endRoutes];
+    const menus = [...common, ...routerList, ...endRoutes];
     layout.children = menus;
     const removeRoute = router.addRoute(layout);
     const filterRoutes = router
@@ -136,11 +135,11 @@ export function generatorDynamicRouter(asyncMenus: API.Menu[]) {
     console.log(filterRoutes);
     layout.children = [...filterRoutes];
     router.addRoute(layout);
-    console.log('所有路由', router.getRoutes());
+    console.log("所有路由", router.getRoutes());
     return {
       menus,
       routes: layout.children,
-    }
+    };
   } catch (error) {
     console.log("路由处理出错", error);
     return {

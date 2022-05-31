@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2021-05-11 15:08:07
- * @LastEditTime: 2022-04-22 14:28:45
+ * @LastEditTime: 2022-05-31 10:04:52
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\vite.config.ts
@@ -9,10 +9,11 @@
 import { defineConfig, ConfigEnv, loadEnv, type ProxyOptions } from "vite";
 import path from "path";
 import vue from "@vitejs/plugin-vue";
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import Components from "unplugin-vue-components/vite";
 import WindiCSS from "vite-plugin-windicss";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
-import { generateModifyVars } from "./build/generate/generateModifyVars";
+import DefineOptions from "unplugin-vue-define-options/vite";
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => {
   // const ROOT = process.cwd(); // 项目根目录
@@ -21,16 +22,18 @@ export default ({ mode }: ConfigEnv) => {
   // 接口代理设置
   //https://www.jianshu.com/p/ff5ee22b2053
   const PROXY_CONFIG: Record<string, string | ProxyOptions> = {
-    '^/api': {
+    "^/api": {
       target: "https://nest-api.buqiyuan.site/api/",
       changeOrigin: true, // 将Origin的来源更改为目标URL
-      rewrite: (path) => path.replace(/^\/api/, '')
+      rewrite: (path) => path.replace(/^\/api/, ""),
     },
   };
   return defineConfig({
     plugins: [
       vue(),
       WindiCSS(),
+      vueJsx(),
+      DefineOptions(),
       Components({
         resolvers: [
           AntDesignVueResolver({
@@ -47,14 +50,16 @@ export default ({ mode }: ConfigEnv) => {
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: generateModifyVars(),
+          modifyVars: {},
           javascriptEnabled: true,
+          additionalData: `@import "ant-design-vue/lib/style/themes/default.less";
+          @import "@/assets/styles/variables.less";`,
         },
       },
     },
     server: {
       open: true,
-      proxy: PROXY_CONFIG
+      proxy: PROXY_CONFIG,
     },
   });
 };

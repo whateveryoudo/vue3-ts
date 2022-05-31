@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2021-05-11 17:13:32
- * @LastEditTime: 2022-05-26 14:57:29
+ * @LastEditTime: 2022-05-31 17:33:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\views\login\index.vue
@@ -141,13 +141,12 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
-@prefix-cls: ~"@{namespace}-login";
-.@{prefix-cls} {
+.ydesign-login {
   background-image: url(@/assets/login.svg);
   width: 100%;
   height: 100vh;
   background-size: 100%;
-  .@{prefix-cls}-form{
+  .ydesign-login-form{
     margin-top: 240px;
     display: flex;
     flex-direction: column;

@@ -13,9 +13,16 @@ declare module '@vue/runtime-core' {
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider']
+    AMenu: typeof import('ant-design-vue/es')['Menu']
+    AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     AppProvider: typeof import('./src/components/Application/src/AppProvider.vue')['default']
+    ASubMenu: typeof import('ant-design-vue/es')['SubMenu']
+    EditorImage: typeof import('./src/components/Tinymce/components/EditorImage.vue')['default']
+    IconFont: typeof import('./src/components/basic/icon-font/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tinymce: typeof import('./src/components/Tinymce/index.vue')['default']
+    TitleI18n: typeof import('./src/components/basic/title-i18n/index.vue')['default']
   }
 }
 
