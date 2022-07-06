@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2022-05-27 09:53:24
- * @LastEditTime: 2022-05-31 17:45:15
+ * @LastEditTime: 2022-07-06 11:23:02
  * @LastEditors: your name
  * @Description: 单个组件渲染
  * @FilePath: \my-vue-app\src\layout\SideMenu\MenuItem.vue
@@ -49,7 +49,6 @@ const menuChildren = computed(() => {
       return a?.meta?.orderNum || 0 - b?.meta?.orderNum || 0;
     });
 });
-console.log(props.menuInfo);
 const hasChild = computed(() => {
   return (
     props.menuInfo?.meta?.type === 0 ||

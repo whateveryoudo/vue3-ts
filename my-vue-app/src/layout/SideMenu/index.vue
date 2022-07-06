@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2022-05-27 09:25:02
- * @LastEditTime: 2022-05-27 10:30:09
+ * @LastEditTime: 2022-07-06 15:40:50
  * @LastEditors: your name
  * @Description: 侧边栏，顶部面包屑
  * @FilePath: \my-vue-app\src\layout\SideMenu\index.vue
@@ -27,7 +27,6 @@ import MenuItem from "./MenuItem.vue";
 const state = reactive({
   openKeys: [],
   selectedKeys: [],
-  collapsed: false,
 });
 const userStore = useUserStore();
 console.log(userStore.menus);
@@ -39,7 +38,10 @@ const showMenus = computed(() => {
       return a?.meta?.orderNum || 0 - b?.meta?.orderNum || 0;
     });
 });
-const props = defineProps({
+defineProps({
+  collapsed: {
+    type: Boolean
+  },
   sideMenuMode: {
     type: String,
     default: "inline",
