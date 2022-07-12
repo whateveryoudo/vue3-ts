@@ -1,31 +1,37 @@
 /*
  * @Author: ykx
  * @Date: 2021-05-11 15:19:59
- * @LastEditTime: 2022-05-26 11:00:43
+ * @LastEditTime: 2022-07-11 11:18:23
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\router\index.ts
  */
 import { createRouter, RouteRecordRaw, createWebHashHistory } from "vue-router";
 import { whiteNameList } from "./constant";
-import outsideLayout from './outsideLayout'
-import { createRouterGuards } from './router-guards'
+import outsideLayout from "./outsideLayout";
+import type { App } from "vue";
+import { createRouterGuards } from "./router-guards";
 export const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    name: 'Layout',
-    redirect: '/dashboard/welcome',
-    component: () => import('@/layout/index.vue'),
+    path: "/",
+    name: "Layout",
+    redirect: "/dashboard/welcome",
+    component: () => import("@/layout/index.vue"),
     meta: {
-      title: "首页"
+      title: "首页",
     },
-    children: []
+    children: [],
   },
-  ...outsideLayout
-] 
+  ...outsideLayout,
+];
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
-createRouterGuards(router, whiteNameList)
-export default router
+
+export async function setupRouter(app: App) {
+  createRouterGuards(router, whiteNameList);
+  app.use(router);
+  await router.isReady();
+}
+export default router;

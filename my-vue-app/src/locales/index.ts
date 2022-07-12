@@ -2,13 +2,13 @@
 /*
  * @Author: ykx
  * @Date: 2022-05-30 09:19:41
- * @LastEditTime: 2022-05-30 15:26:16
+ * @LastEditTime: 2022-07-07 09:48:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\locales\index.ts
  */
 import type { App } from "vue";
-import { createI18n } from 'vue-i18n'
+import { createI18n } from 'vue-i18n/index'
 import { localeMap } from './config';
 import { useLocaleStoreWithOut } from '@/store/modules/locale'
 async function createI18nOptions() {

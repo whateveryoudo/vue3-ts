@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-28 17:27:43
- * @LastEditTime: 2022-05-30 16:50:55
+ * @LastEditTime: 2022-07-12 15:03:52
  * @LastEditors: your name
  * @Description: 路由数据处理
  * @FilePath: \my-vue-app\src\router\generator-router.tsx
@@ -29,6 +29,7 @@ export function filterAsyncRoute(
     .map((item) => {
       const { router, type, viewPath, keepalive, name, icon } = item;
       let fullPath = "";
+      // const pathPrefix = lastMenuNamePath.at(-1) || '';
       if (isUrl(router)) {
         fullPath = router;
       } else {
@@ -93,24 +94,15 @@ const generatorNamePath = (
   parent?: RouteRecordRaw
 ) => {
   routes.forEach((item) => {
-    if (item.children?.length) {
-      if (item.meta && typeof item.name === "string") {
-        item.meta.namePath = Array.isArray(namePath)
-          ? namePath.concat(item.name)
-          : [item.name];
-        item.meta.fullPath = parent?.meta?.fullPath
-          ? [parent.meta.fullPath, item.name].join("/")
-          : item.name;
-        generatorNamePath(item.children, namePath, item);
-      }
-    } else {
-      if (item.meta && typeof item.name === "string") {
-        item.meta.namePath = Array.isArray(namePath)
-          ? namePath.concat(item.name)
-          : [item.name];
-        item.meta.fullPath = parent?.meta?.fullPath
-          ? [parent.meta.fullPath, item.name].join("/")
-          : item.name;
+    if (item.meta && typeof item.name === "string") {
+      item.meta.namePath = Array.isArray(namePath)
+        ? namePath.concat(item.name)
+        : [item.name];
+      item.meta.fullPath = parent?.meta?.fullPath
+        ? [parent.meta.fullPath, item.path].join("/")
+        : item.path;
+      if (item.children?.length) {
+        generatorNamePath(item.children, item.meta.namePath as string[], item);
       }
     }
   });
@@ -132,8 +124,8 @@ export function generatorDynamicRouter(asyncMenus: API.Menu[]) {
           !outsideLayout.some((n) => n.name === item.name)
       );
     removeRoute();
-    console.log(filterRoutes);
     layout.children = [...filterRoutes];
+    console.log(layout);
     router.addRoute(layout);
     console.log("所有路由", router.getRoutes());
     return {

@@ -1,13 +1,13 @@
 /*
  * @Author: ykx
  * @Date: 2021-05-11 15:08:07
- * @LastEditTime: 2022-05-30 14:35:29
+ * @LastEditTime: 2022-07-11 11:19:46
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\main.ts
  */
 import { createApp } from "vue";
-import router from "./router";
+import { setupRouter } from "./router";
 import App from "./App.vue";
 import config from "./config";
 import { setupI18n } from "@/locales";
@@ -22,6 +22,9 @@ async function setUpApp() {
   app.config.globalProperties.$config = config;
   // setupPlugins();
   await setupI18n(app);
-  app.use(router).mount("#app");
+
+  // 挂载路由
+  await setupRouter(app);
+  app.mount("#app");
 }
 setUpApp();

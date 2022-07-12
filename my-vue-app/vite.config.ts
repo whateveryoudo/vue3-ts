@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2021-05-11 15:08:07
- * @LastEditTime: 2022-05-31 10:04:52
+ * @LastEditTime: 2022-07-12 17:41:09
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\vite.config.ts
@@ -47,13 +47,13 @@ export default ({ mode }: ConfigEnv) => {
         "@": path.resolve(__dirname, "src") + "/",
       },
     },
+    // @import "ant-design-vue/lib/style/themes/default.less"; 不要加载全量变量
     css: {
       preprocessorOptions: {
         less: {
           modifyVars: {},
           javascriptEnabled: true,
-          additionalData: `@import "ant-design-vue/lib/style/themes/default.less";
-          @import "@/assets/styles/variables.less";`,
+          additionalData: `@import "@/assets/styles/variables.less";`,
         },
       },
     },

@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-05-30 17:13:19
- * @LastEditTime: 2022-05-31 17:45:00
+ * @LastEditTime: 2022-07-07 10:01:43
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\components\basic\icon-font\icon-font.tsx
@@ -19,6 +19,7 @@ export default defineComponent({
   props: {
     type: {
       type: String as PropType<string>,
+      default: "",
     },
     prefix: {
       type: String,
@@ -54,11 +55,10 @@ export default defineComponent({
       };
     });
     return () => {
-      const { type, prefix } = toRefs(props);
+      const { type, prefix } = props;
       return (
         <MyIconfontComponent
-          prefix={props.prefix}
-          type={type.value.startsWith(prefix.value) ? type.value : prefix.value + type.value}
+          type={type.startsWith(prefix) ? type : prefix + type}
           {...attrs}
           style={unref(wrapStyleObj)}
         />

@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-05-25 18:14:18
- * @LastEditTime: 2022-05-26 11:07:02
+ * @LastEditTime: 2022-07-11 16:41:08
  * @LastEditors: your name
  * @Description: 路由守卫
  * @FilePath: \my-vue-app\src\router\router-guards.ts
@@ -25,32 +25,19 @@ export const createRouterGuards = (
     if (token) {
       if (to.name === LOGIN_NAME) {
         next({ path: defaultRoutePath });
+        NProgress.done();
       } else {
         if (userStore.menus.length === 0) {
           await userStore.afterLogin();
           const hasRoute = router.hasRoute(to.name!);
           if (!hasRoute) {
-            next({
-              name: LOGIN_NAME,
-              query: { redirect: to.fullPath },
-              replace: true,
-            });
+            next({ ...to, replace: true });
           } else if (whiteNameList.some((n) => n === to.name) || hasRoute) {
             // 在免登录名单，直接进入
             next();
           }
         } else {
-          const hasRoute = router.hasRoute(to.name!);
-          if (!hasRoute) {
-            next({
-              name: LOGIN_NAME,
-              query: { redirect: to.fullPath },
-              replace: true,
-            });
-          } else if (whiteNameList.some((n) => n === to.name) || hasRoute) {
-            // 在免登录名单，直接进入
-            next();
-          }
+          next();
         }
       }
     } else {
