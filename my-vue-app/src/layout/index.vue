@@ -1,7 +1,7 @@
 <!--
  * @Author: ykx
  * @Date: 2022-05-25 09:56:30
- * @LastEditTime: 2022-07-06 15:49:49
+ * @LastEditTime: 2022-09-28 17:51:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \my-vue-app\src\layout\index.vue
@@ -21,7 +21,7 @@
     </a-layout-sider>
     <a-layout>
       <PageHeader v-model:collapsed="collapsed" />
-      <a-layout-content>
+      <a-layout-content class="px-3.5 py-5">
         <router-view></router-view>
       </a-layout-content>
     </a-layout>

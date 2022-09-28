@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-04-27 10:12:42
- * @LastEditTime: 2022-04-29 18:09:59
+ * @LastEditTime: 2022-09-28 17:42:42
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\api\account\model.d.ts
@@ -25,5 +25,6 @@ declare namespace API {
   };
   type AdminUserInfo = {
     username: string;
+    loginIp: string;
   };
 }
