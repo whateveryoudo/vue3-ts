@@ -1,14 +1,14 @@
 /*
  * @Author: ykx
  * @Date: 2022-10-08 16:21:01
- * @LastEditTime: 2022-10-08 16:27:21
+ * @LastEditTime: 2022-10-20 10:00:20
  * @LastEditors: your name
  * @Description: 示例
  * @FilePath: \my-vue-app\src\router\staticModules\demos.ts
  */
 import { type RouteRecordRaw } from "vue-router";
 import RouterView from "@/layout/routerView/index.vue";
-import { t } from "@/hooks/userI18n";
+import { t } from "@/hooks/useI18n";
 const moduleName = "demos";
 const routes: RouteRecordRaw[] = [
   {

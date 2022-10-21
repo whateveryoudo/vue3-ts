@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-05-30 09:19:41
- * @LastEditTime: 2022-07-13 16:13:47
+ * @LastEditTime: 2022-10-19 16:36:08
  * @LastEditors: your name
  * @Description:
  * @FilePath: \my-vue-app\src\locales\index.ts
@@ -24,9 +24,8 @@ async function createI18nOptions() {
     },
   };
 }
-
+const options = await createI18nOptions();
+export const i18n = createI18n(options);
 export async function setupI18n(app: App) {
-  const options = await createI18nOptions();
-  const i18n = createI18n(options);
   app.use(i18n);
 }

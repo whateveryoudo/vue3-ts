@@ -1,7 +1,7 @@
 /*
  * @Author: ykx
  * @Date: 2022-05-25 10:09:14
- * @LastEditTime: 2022-05-31 17:39:02
+ * @LastEditTime: 2022-10-20 10:00:14
  * @LastEditors: your name
  * @Description: 工作台
  * @FilePath: \my-vue-app\src\router\staticModules\dashborad.ts
@@ -9,7 +9,7 @@
 import { type RouteRecordRaw } from "vue-router";
 import RouterView from "@/layout/routerView/index.vue";
 
-import { t } from "@/hooks/userI18n";
+import { t } from "@/hooks/useI18n";
 const moduleName = "dashboard";
 const routes: RouteRecordRaw[] = [
   {
